@@ -10,7 +10,11 @@
 <body>
 	<!--4. post_list.html에서 for loop사용해 전달된 posts변수 순환 및 출력-->
 	{% for post in posts %}
-	<div>{{ post.id }}</div>
+	<div>
+		<span>{{ post.id }}</span>
+		<span>{{ post.photo.url }}</span>
+		<img src="{{ post.photo.url }}" alt="">
+	</div>
 	{% endfor %}
 </body>
 </html>

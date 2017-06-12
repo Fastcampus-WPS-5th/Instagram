@@ -11,7 +11,7 @@ from django.db import models
 class Post(models.Model):
     # Django가 제공하는 기본 settings.AUTH_USER_MODEL와 연결되도록 수정
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    photo = models.ImageField(blank=True)
+    photo = models.ImageField(upload_to='post', blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     like_users = models.ManyToManyField(
@@ -19,7 +19,7 @@ class Post(models.Model):
         related_name='like_posts',
         through='PostLike',
     )
-    tags = models.ManyToManyField('Tag')
+    tags = models.ManyToManyField('Tag', blank=True)
 
     def add_comment(self, user, content):
         # 자신을 post로 갖고, 전달받은 user를 author로 가지며

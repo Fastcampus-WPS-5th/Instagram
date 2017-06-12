@@ -45,13 +45,19 @@ https://docs.djangoproject.com/en/1.11/topics/settings/
 
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.11/ref/settings/
+
+1. TEMPLATE_DIR에 instagram/django_app/templates폴더를 생성 후 해당 경로를 지정
+2. TEMPLATES의 DIRS리스트 설정에 위 변수 삽입
+3. templates디렉토리의 post/post_list.html생성
+4. post_list.html에서 for loop사용해 전달된 posts변수 순환 및 출력
+5. post_list view가 /post/에 접근시 출력되도록 post/urls.py에 설정
 """
 
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -99,7 +105,9 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            TEMPLATE_DIR,
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

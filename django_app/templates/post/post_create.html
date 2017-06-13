@@ -1,0 +1,12 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div>
+	<form action="" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<input type="file" name="file">
+		<input type="text" name="comment" placeholder="댓글">
+		<button type="submit">등록</button>
+	</form>
+</div>
+{% endblock %}

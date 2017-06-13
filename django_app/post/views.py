@@ -1,6 +1,12 @@
-from django.http import HttpResponse, HttpResponseNotFound
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.template import loader
+from django.urls import reverse
+
+# 자동으로 Django에서 인증에 사용하는 User모델클래스를 리턴
+#   https://docs.djangoproject.com/en/1.11/topics/auth/customizing/#django.contrib.auth.get_user_model
+User = get_user_model()
 
 from .models import Post
 
@@ -32,11 +38,11 @@ def post_detail(request, post_pk):
         # 2. post_list view로 돌아간다
         # 2-1. redirect를 사용
         #   https://docs.djangoproject.com/en/1.11/topics/http/shortcuts/#redirect
-        return redirect('post:post_list')
+        # return redirect('post:post_list')
         # 2-2. HttpResponseRedirect
         #   https://docs.djangoproject.com/en/1.11/ref/request-response/#django.http.HttpResponseRedirect
-
-
+        url = reverse('post:post_list')
+        return HttpResponseRedirect(url)
 
     # request에 대해 response를 돌려줄때는 HttpResponse나 render를 사용가능
     # template을 사용하려면 render함수를 사용한다
@@ -65,7 +71,41 @@ def post_detail(request, post_pk):
 
 def post_create(request):
     # POST요청을 받아 Post객체를 생성 후 post_list페이지로 redirect
-    pass
+    if request.method == 'POST':
+        # get_user_model을 이용해서 얻은 User클래스(Django에서 인증에 사용하는 유저모델)에서 임의의 유저 한명을 가져온다.
+        user = User.objects.first()
+        # 새 Post객체를 생성하고 DB에 저장
+        post = Post.objects.create(
+            author=user,
+            # request.FILES에서 파일 가져오기
+            #   https://docs.djangoproject.com/en/1.11/topics/http/file-uploads/#basic-file-uploads
+            # 가져온 파일을 ImageField에 넣도록 설정
+            # 'file'은 POST요청시 input[type="file"]이 가진 name속성
+            photo=request.FILES['file'],
+        )
+        # POST요청시 name이 'comment'인 input에서 전달된 값을 가져옴
+        # dict.get()
+        #   https://www.tutorialspoint.com/python/dictionary_get.htm
+        comment_string = request.POST.get('comment', '')
+        # 빈 문자열 ''이나 None모두 False로 평가되므로
+        # if not으로 댓글로 쓸 내용 또는 comment키가 전달되지 않았음을 검사 가능
+        if comment_string:
+            # 댓글로 사용할 문자열이 전달된 경우 위에서 생성한 post객체에 연결되는 Comment객체를 생성해준다
+            post.comment_set.create(
+                # 임의의 user를 사용하므로 나중에 실제 로그인된 사용자로 바꾸어주어야 함
+                author=user,
+                content=comment_string,
+            )
+            # 역참조로 가져온 RelatedManager를 사용하지 않을경우엔 아래와 같이 작업함
+            # Comment.objects.create(
+            #     post=post,
+            #     author=user,
+            #     content=comment_string,
+            # )
+        return redirect('post:post_detail', post_pk=post.pk)
+    else:
+        # post/post_create.html을 render해서 리턴
+        return render(request, 'post/post_create.html')
 
 
 def post_modify(request, post_pk):
@@ -92,3 +132,7 @@ def comment_modify(request, post_pk):
 def comment_delete(request, post_pk, comment_pk):
     # POST요청을 받아 Comment객체를 delete, 이후 post_detail페이지로 redirect
     pass
+
+
+def post_anyway(request):
+    return redirect('post:post_list')

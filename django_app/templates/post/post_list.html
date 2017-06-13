@@ -2,6 +2,10 @@
 
 {% block content %}
 	<!--4. post_list.html에서 for loop사용해 전달된 posts변수 순환 및 출력-->
+	<!--
+		include
+			https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include
+	-->
 	{% for post in posts %}
 		{% include 'include/post.html' %}
 	{% endfor %}

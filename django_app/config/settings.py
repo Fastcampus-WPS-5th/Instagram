@@ -72,7 +72,7 @@ MEDIA_URL = '/media/'
 # django_app/media
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Custom User
+# Custom User (default: auth.User)
 AUTH_USER_MODEL = 'member.User'
 
 # Application definition

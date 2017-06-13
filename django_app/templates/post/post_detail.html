@@ -7,6 +7,15 @@
 
 	템플릿에서 namespace URL reverse
 		https://docs.djangoproject.com/en/1.11/topics/http/urls/#reversing-namespaced-urls
+		
+	템플릿 태그 if
+		https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#if
+
+	템플릿 태그 for
+		https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#for
+		
+	템플릿 include
+		https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include
 	-->
 
 	<!--
@@ -21,27 +30,5 @@
 		댓글작성
 		좋아요버튼
 	-->
-	<img src="{{ post.photo.url }}" alt="">
-	<div>작성자 : {{ post.author }}</div>
-	<div>좋아요 개수 : {{ post.like_count }}</div>
-
-	<!--
-	템플릿 태그 if
-		https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#if
-
-	템플릿 태그 for
-		https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#for
-	-->
-	<h5>댓글 목록</h5>
-	{% if post.comment_set.all %}
-		{% for comment in post.comment_set.all %}
-		<div>
-			<div>작성자: {{ comment.author }}</div>
-			<div>내용 : {{ comment.content }}</div>
-			<div>작성일자 : {{ comment.created_date }}</div>
-		</div>
-		{% endfor %}
-	{% else %}
-		<div>댓글이 없습니다</div>
-	{% endif %}
+	{% include 'include/post.html' %}
 {% endblock %}

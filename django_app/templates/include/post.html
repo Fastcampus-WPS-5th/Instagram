@@ -1,0 +1,36 @@
+<article class="post">
+  <header>
+    <div class="post-header-left">
+      <img src="" alt="">
+      <span>{{ post.author }}</span>
+    </div>
+    <div class="post-header-right">
+      
+    </div>
+  </header>
+  <div class="post-photo-container">
+    <img src="{{ post.photo.url }}" alt="">
+  </div>
+  <div class="post-btn-container">
+    <a href="#">
+      <img src="" alt="">
+    </a>
+    <a href="#">
+      <img src="" alt="">
+    </a>
+  </div>
+  <p>좋아요 {{ post.like_count }}개</p>
+  <div class="post-comment-container">
+    <div class="post-comment">
+      <a href="" class="comment-author"></a>
+      <span class="comment-content"></span>
+      <a href="" class="comment-tag"></a>
+      <a href="" class="comment-tag"></a>
+      <a href="" class="comment-tag"></a>
+    </div>
+  </div>
+  <p class="created">{{ post.created_date }}</p>
+  <form action="">
+    <input type="text" placeholder="댓글달기">
+  </form>
+</article>

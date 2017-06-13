@@ -1,6 +1,10 @@
+{% load static %}
 <!--
 	템플릿 상속
 		https://docs.djangoproject.com/en/1.11/ref/templates/language/#template-inheritance
+
+	static 태그
+		https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#static
 -->
 <!doctype html>
 <html lang="ko">
@@ -9,10 +13,38 @@
 	<meta name="viewport"
 	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link rel="stylesheet" href="{% static 'css/layout.css' %}">
 	<title>Instagram</title>
 </head>
 <body>
-	{% block content %}
-	{% endblock %}
+	<div id="wrap">
+		<header class="top-header">
+			<nav>
+				<div class="nav-left nav-item">
+					<a href="#">
+						<img src="{% static 'images/logo.png' %}" alt="">
+					</a>
+				</div>
+				<div class="nav-center nav-item">
+					<input type="text" placeholder="검색">
+				</div>
+				<div class="nav-right nav-item">
+					<a href="#">
+						<img src="{% static 'images/icon_explore.png' %}" alt="">
+					</a>
+					<a href="#">
+						<img src="{% static 'images/icon_heart.png' %}" alt="">
+					</a>
+					<a href="#">
+						<img src="{% static 'images/icon_profile.png' %}" alt="">
+					</a>
+				</div>
+			</nav>
+		</header>
+		{% block content %}
+		{% endblock %}
+	</div>
 </body>
 </html>

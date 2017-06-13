@@ -1,0 +1,50 @@
+#wrap {
+  max-width: 1010px;
+  margin: 0 auto;
+}
+$header-height: 83px;
+header.top-header {
+  height: $header-height;
+  padding: 0 10px;
+  border-bottom: 1px solid rgba(0,0,0,.0975);
+}
+header.top-header > nav {
+  height: $header-height;
+  // 각 div내의 a요소들은 height와 line-height를 
+  // 같은 값으로 가져 수직중앙정렬되도록 함
+  // img요소는 vertical-align에 middle속성으로 수직중앙정렬
+  .nav-item { 
+    height: $header-height; 
+    line-height: $header-height;
+  }
+  .nav-item > a {
+    height: $header-height;
+    line-height: $header-height;
+    display: inline-block;
+    
+    > img {
+      vertical-align: middle;
+    }
+  }
+  .nav-left {
+    float: left;
+    margin-right: 20px;
+    width: 182px;
+  }
+  .nav-center {
+    width: 147px;
+    float: left;
+  }
+  @media screen and (max-width: 518px) {
+    .nav-center {
+      display: none;
+    }
+  }
+  .nav-right {
+    width: 150px;
+    float: right;
+    a {
+      padding: 0 10px;
+    }
+  }
+}

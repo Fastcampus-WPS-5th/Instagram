@@ -1,17 +1,47 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-</head>
-<body>
+{% extends 'common/base.html' %}
+
+{% block content %}
 	<!--
 	템플릿 변수 사용하기
 		https://docs.djangoproject.com/en/1.11/ref/templates/language/#variables
+
+	템플릿에서 namespace URL reverse
+		https://docs.djangoproject.com/en/1.11/topics/http/urls/#reversing-namespaced-urls
 	-->
-	{{ post }}
-</body>
-</html>
+
+	<!--
+		Detail에서 나와야 할 요소
+		사진
+		작성자
+		작성자를 팔로잉하고 있는지 여부 및 팔로우/언팔로우 버튼
+		좋아요개수
+		댓글목록
+			댓글내용
+			태그목록
+		댓글작성
+		좋아요버튼
+	-->
+	<img src="{{ post.photo.url }}" alt="">
+	<div>작성자 : {{ post.author }}</div>
+	<div>좋아요 개수 : {{ post.like_count }}</div>
+
+	<!--
+	템플릿 태그 if
+		https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#if
+
+	템플릿 태그 for
+		https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#for
+	-->
+	<h5>댓글 목록</h5>
+	{% if post.comment_set.all %}
+		{% for comment in post.comment_set.all %}
+		<div>
+			<div>작성자: {{ comment.author }}</div>
+			<div>내용 : {{ comment.content }}</div>
+			<div>작성일자 : {{ comment.created_date }}</div>
+		</div>
+		{% endfor %}
+	{% else %}
+		<div>댓글이 없습니다</div>
+	{% endif %}
+{% endblock %}

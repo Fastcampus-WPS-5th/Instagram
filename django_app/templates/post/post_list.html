@@ -1,13 +1,6 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-	      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
-</head>
-<body>
+{% extends 'common/base.html' %}
+
+{% block content %}
 	<!--4. post_list.html에서 for loop사용해 전달된 posts변수 순환 및 출력-->
 	{% for post in posts %}
 	<div>
@@ -16,5 +9,4 @@
 		<img src="{{ post.photo.url }}" alt="">
 	</div>
 	{% endfor %}
-</body>
-</html>
+{% endblock %}

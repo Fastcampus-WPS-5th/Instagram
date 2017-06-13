@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from . import views
 
-# url namespace
+# URL Namespace
 # https://docs.djangoproject.com/en/1.11/topics/http/urls/#url-namespaces
 app_name = 'post'
 urlpatterns = [

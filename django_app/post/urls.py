@@ -1,13 +1,16 @@
 from django.conf.urls import url
 from . import views
 
+# url namespace
+# https://docs.djangoproject.com/en/1.11/topics/http/urls/#url-namespaces
+app_name = 'post'
 urlpatterns = [
     # url() 사용법
     # https://docs.djangoproject.com/en/1.11/ref/urls/#url
 
     # post_list와 매칭
     # /post/$
-    url(r'^$', views.post_list),
+    url(r'^$', views.post_list, name='post_list'),
 
     # post_detail과 매칭
     # /post/3/$, /post/35/$
@@ -16,5 +19,5 @@ urlpatterns = [
 
     # 정규표현식에서 매칭된 그룹을 키워드인수로 반환하는 방법
     # 그룹의 가장 앞 부분에 ?P<패턴이름>을 지정
-    url(r'^(?P<post_pk>\d+)/$', views.post_detail),
+    url(r'^(?P<post_pk>\d+)/$', views.post_detail, name='post_detail'),
 ]

@@ -1,5 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import render, redirect
 from django.template import loader
 
 from .models import Post
@@ -21,8 +21,22 @@ def post_detail(request, post_pk):
     # Model(DB)에서 post_pk에 해당하는 Post객체를 가져와 변수에 할당
     # ModelManager의 get메서드를 사용해서 단 한개의 객체만 가져온다
     # https://docs.djangoproject.com/en/1.11/ref/models/querysets/#get
-    post = Post.objects.get(pk=post_pk)
-    # post = Post.objects.get(id=post_pk)는 위와 같음
+
+    # 가져오는 과정에서 예외처리를 한다 (Model.DoesNotExist)
+    try:
+        post = Post.objects.get(pk=post_pk)
+    except Post.DoesNotExist as e:
+        # 1. 404 Notfound를 띄워준다
+        # return HttpResponseNotFound('Post not found, detail: {}'.format(e))
+
+        # 2. post_list view로 돌아간다
+        # 2-1. redirect를 사용
+        #   https://docs.djangoproject.com/en/1.11/topics/http/shortcuts/#redirect
+        return redirect('post:post_list')
+        # 2-2. HttpResponseRedirect
+        #   https://docs.djangoproject.com/en/1.11/ref/request-response/#django.http.HttpResponseRedirect
+
+
 
     # request에 대해 response를 돌려줄때는 HttpResponse나 render를 사용가능
     # template을 사용하려면 render함수를 사용한다
@@ -47,7 +61,6 @@ def post_detail(request, post_pk):
     rendered_string = template.render(context=context, request=request)
     # 변환된 string을 HttpResponse형태로 돌려준다
     return HttpResponse(rendered_string)
-
 
 
 def post_create(request):

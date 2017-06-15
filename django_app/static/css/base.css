@@ -12,3 +12,10 @@ input[type=text], input[type=password] {
   padding: 3px 10px 3px 10px;
   background-color: #fafafa;
 }
+
+.test {
+  padding: 10px;
+  color: white;
+  background-color: red;
+  font-size: 14px;
+}

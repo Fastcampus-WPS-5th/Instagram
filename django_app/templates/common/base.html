@@ -44,6 +44,21 @@
 				</div>
 			</nav>
 		</header>
+
+		<div class="test">
+			<!-- 
+			user가 is_authenticated일 경우,
+				<유저명>이 로그인중입니다!
+			아닐경우
+				로그인하세요
+			를 출력
+			 -->
+			{% if user.is_authenticated %}
+				{{ user }}가 로그인 중입니다
+			{% else %}
+				로그인하세요
+			{% endif %}
+		</div>
 		
 		<div class="container">
 			{% block content %}

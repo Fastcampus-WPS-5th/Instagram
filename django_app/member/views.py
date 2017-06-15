@@ -55,3 +55,17 @@ def logout(request):
     # 로그아웃되면 post_list로 redirect
     django_logout(request)
     return redirect('post:post_list')
+
+
+def signup(request):
+    # url은 /member/signup/$
+    # member/signup.html을 사용
+    #   username, password1, password2를 받아 회원가입
+    #   이미 유저가 존재하는지 검사
+    #   password1, 2가 일치하는지 검사
+    #   각각의 경우를 검사해서 틀릴경우 오류메시지 리턴
+    #   가입에 성공시 로그인시키고 post_list로 리다이렉트
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'member/signup.html')

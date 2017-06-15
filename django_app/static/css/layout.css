@@ -1,54 +1,64 @@
 header.top-header {
-  height: 83px;
-  padding: 0 10px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
 }
 
-header.top-header > nav {
+header.top-header > nav:nth-child(1) {
   max-width: 1010px;
   margin: 0 auto;
+  padding: 0 10px;
   height: 83px;
 }
 
-header.top-header > nav .nav-item {
+header.top-header > nav:nth-child(1) .nav-item {
   height: 83px;
   line-height: 83px;
 }
 
-header.top-header > nav .nav-item > a {
+header.top-header > nav:nth-child(1) .nav-item > a {
   height: 83px;
   line-height: 83px;
   display: inline-block;
 }
 
-header.top-header > nav .nav-item > a > img {
+header.top-header > nav:nth-child(1) .nav-item > a > img {
   vertical-align: middle;
 }
 
-header.top-header > nav .nav-left {
+header.top-header > nav:nth-child(1) .nav-left {
   float: left;
   margin-right: 20px;
   width: 182px;
 }
 
-header.top-header > nav .nav-center {
+header.top-header > nav:nth-child(1) .nav-center {
   width: 147px;
   float: left;
 }
 
 @media screen and (max-width: 700px) {
-  header.top-header > nav .nav-center {
+  header.top-header > nav:nth-child(1) .nav-center {
     display: none;
   }
 }
 
-header.top-header > nav .nav-right {
+header.top-header > nav:nth-child(1) .nav-right {
   width: 150px;
   float: right;
 }
 
-header.top-header > nav .nav-right a {
+header.top-header > nav:nth-child(1) .nav-right a {
   padding: 0 10px;
+}
+
+header.top-header > nav:nth-child(2) {
+  border-top: 1px solid rgba(0, 0, 0, 0.0975);
+  padding: 8px 0;
+  text-align: right;
+}
+
+header.top-header > nav:nth-child(2) > div {
+  max-width: 1010px;
+  margin: 0 auto;
 }
 
 .container {

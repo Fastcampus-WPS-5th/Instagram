@@ -4,11 +4,11 @@ from django.shortcuts import render, redirect
 from django.template import loader
 from django.urls import reverse
 
+from .models import Post
+
 # 자동으로 Django에서 인증에 사용하는 User모델클래스를 리턴
 #   https://docs.djangoproject.com/en/1.11/topics/auth/customizing/#django.contrib.auth.get_user_model
 User = get_user_model()
-
-from .models import Post
 
 
 def post_list(request):

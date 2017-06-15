@@ -1,10 +1,11 @@
 from django.contrib.auth import \
     authenticate, \
     login as django_login, \
-    logout as django_logout
+    logout as django_logout, get_user_model
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
+User = get_user_model()
 
 def login(request):
     # member/login.html 생성
@@ -66,6 +67,26 @@ def signup(request):
     #   각각의 경우를 검사해서 틀릴경우 오류메시지 리턴
     #   가입에 성공시 로그인시키고 post_list로 리다이렉트
     if request.method == 'POST':
-        pass
+        # username, password1, password2에 POST로 전달받은 데이터를 할당
+        username = request.POST['username']
+        password1 = request.POST['password1']
+        password2 = request.POST['password2']
+        # username에 해당하는 User가 있는지 검사
+        if User.objects.filter(username=username).exists():
+            # 이미 존재하는 username일경우
+            return HttpResponse('Username is already exist')
+        # password1과 password2가 같은지 검사
+        elif password1 != password2:
+            # 다를경우
+            return HttpResponse('Password and Password check are not equal')
+        # 위의 두 경우가 아닌 경우 유저를 생성
+        user = User.objects.create_user(
+            username=username,
+            password=password1
+        )
+        # 생성한 유저를 로그인 시킴
+        django_login(request, user)
+        # 이후 post_list뷰로 이동
+        return redirect('post:post_list')
     else:
         return render(request, 'member/signup.html')

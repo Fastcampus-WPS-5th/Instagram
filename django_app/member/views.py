@@ -52,12 +52,12 @@ def login(request):
         if form.is_valid():
             user = form.cleaned_data['user']
             django_login(request, user)
+            # 일반적인 경우에는 post_list로 이동하지만,
+            # GET parameter의 next속성값이 있을 경우 해당 URL로 이동
+            next = request.GET.get('next')
+            if next:
+                return redirect(next)
             return redirect('post:post_list')
-
-        # user변수가 None일 경우 (username또는 password가 틀려 인증에 실패한 경우)
-        else:
-            # 로그인에 실패했음을 알림
-            return HttpResponse('Login credentials invalid')
     # GET요청이 왔을 경우 (단순 로그인 Form보여주기)
     else:
         # 만약 이미 로그인 된 상태일 경우에는
@@ -67,11 +67,11 @@ def login(request):
             return redirect('post:post_list')
         # LoginForm인스턴스를 생성해서 context에 넘김
         form = LoginForm()
-        context = {
-            'form': form,
-        }
-        # render시 context에는 LoginForm클래스형 form객체가 포함됨
-        return render(request, 'member/login.html', context)
+    context = {
+        'form': form,
+    }
+    # render시 context에는 LoginForm클래스형 form객체가 포함됨
+    return render(request, 'member/login.html', context)
 
 
 def logout(request):

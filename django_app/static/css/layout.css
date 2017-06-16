@@ -72,3 +72,7 @@ header.top-header > nav:nth-child(2) > div {
     padding-top: 0;
   }
 }
+
+.container > .content {
+  padding: 0 10px;
+}

@@ -1,7 +1,36 @@
 .btn {
-  padding: 4px 10px;
+  padding: 6px 12px;
   border: 1px solid rgba(0, 0, 0, 0.0975);
+  background-color: #fff;
   border-radius: 3px;
   cursor: pointer;
   text-decoration: none;
+  font-size: 11px;
+}
+
+.field-wrapper {
+  margin-bottom: 10px;
+}
+
+.field-wrapper ul.errors {
+  font-size: 11px;
+  color: red;
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+.field-wrapper label {
+  font-size: 11px;
+}
+
+.field-wrapper input[type=text], .field-wrapper input[type=password] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field-wrapper p.help {
+  font-size: 10px;
+  color: #ccc;
+  margin-top: 2px;
+  margin-bottom: 0;
 }

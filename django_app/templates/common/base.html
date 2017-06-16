@@ -25,7 +25,7 @@
 		<header class="top-header">
 			<nav>
 				<div class="nav-left nav-item">
-					<a href="#">
+					<a href="{% url 'post:post_list' %}">
 						<img src="{% static 'images/logo.png' %}" alt="">
 					</a>
 				</div>
@@ -54,7 +54,17 @@
 					<span>{{ user }}로 로그인 중</span>
 					<a href="{% url 'member:logout' %}" class="btn">로그아웃</a>
 					{% else %}
-					<a href="{% url 'member:login' %}" class="btn">로그인</a>
+					<form action="{% url 'member:login' %}" method="POST" class="form-inline-login">
+						{% csrf_token %}
+						<!--<label for="id-login-username">ID:</label>-->
+						<!--<input id="id-login-username" type="text" name="username">-->
+						<!--&nbsp;-->
+						<!--<label for="id-login-password">PW:</label>-->
+						<!--<input id="id-login-password" type="password" name="password">-->
+						{{ login_form }}
+						<button type="submit" class="btn">로그인</button>
+					</form>
+					<!--<a href="{% url 'member:login' %}" class="btn">로그인</a>-->
 					{% endif %}
 				</div>
 			</nav>

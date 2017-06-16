@@ -5,9 +5,9 @@ from django.contrib.auth import authenticate
 class LoginForm(forms.Form):
     # Form and field validation
     #   https://docs.djangoproject.com/en/1.11/ref/forms/validation/
-    def __init__(self, *args, **kwargs):
-        kwargs.setdefault('label_suffix', '')
-        super().__init__(*args, **kwargs)
+    # def __init__(self, *args, **kwargs):
+    #     kwargs.setdefault('label_suffix', '')
+    #     super().__init__(*args, **kwargs)
 
     username = forms.CharField(
         max_length=30,

@@ -28,6 +28,11 @@
   box-sizing: border-box;
 }
 
+.field-wrapper input[type=file] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
 .field-wrapper p.help {
   font-size: 10px;
   color: #ccc;

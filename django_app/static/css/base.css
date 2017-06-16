@@ -13,6 +13,10 @@ input[type=text], input[type=password] {
   background-color: #fafafa;
 }
 
+input[type=file] {
+  font-size: 10px;
+}
+
 a {
   color: #262626;
   text-decoration: none;

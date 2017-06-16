@@ -74,6 +74,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Custom User (default: auth.User)
 AUTH_USER_MODEL = 'member.User'
+LOGIN_URL = 'member:login'
 
 # Application definition
 INSTALLED_APPS = [

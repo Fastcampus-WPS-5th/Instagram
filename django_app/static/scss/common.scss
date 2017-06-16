@@ -25,6 +25,10 @@
     width: 100%;
     box-sizing: border-box;
   }
+  input[type=file] {
+    width: 100%;
+    box-sizing: border-box;
+  }
   p.help {
     font-size: 10px;
     color: #ccc;

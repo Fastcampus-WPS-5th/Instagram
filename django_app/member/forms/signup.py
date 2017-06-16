@@ -10,6 +10,11 @@ class SignupForm(forms.Form):
         help_text='Signup help text test',
         widget=forms.TextInput
     )
+    nickname = forms.CharField(
+        widget=forms.TextInput,
+        help_text='닉네임은 유일해야 합니다',
+        max_length=24,
+    )
     password1 = forms.CharField(
         widget=forms.PasswordInput
     )
@@ -26,6 +31,14 @@ class SignupForm(forms.Form):
                 'Username already exist'
             )
         return username
+
+    def clean_nickname(self):
+        nickname = self.cleaned_data.get('nickname')
+        if nickname and User.objects.filter(nickname=nickname).exists():
+            raise forms.ValidationError(
+                'Nickname already exist'
+            )
+        return nickname
 
     def clean_password2(self):
         # password1과 password2를 비교하여 같은지 검증
@@ -44,7 +57,9 @@ class SignupForm(forms.Form):
         # 생성한 유저를 반환
         username = self.cleaned_data['username']
         password = self.cleaned_data['password2']
+        nickname = self.cleaned_data['nickname']
         return User.objects.create_user(
             username=username,
+            nickname=nickname,
             password=password
         )

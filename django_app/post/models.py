@@ -14,6 +14,12 @@ class Post(models.Model):
     photo = models.ImageField(upload_to='post', blank=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
+    my_comment = models.OneToOneField(
+        'Comment',
+        blank=True,
+        null=True,
+        related_name='+'
+    )
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         related_name='like_posts',

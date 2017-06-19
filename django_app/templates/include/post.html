@@ -1,8 +1,9 @@
+{% load static %}
 <article class="post">
   <header>
     <div class="post-header-left">
       <img src="" alt="">
-      <span>{{ post.author }}</span>
+      <span class="header-author">{{ post.author }}</span>
     </div>
     <div class="post-header-right">
       
@@ -21,28 +22,30 @@
     <img src="{{ post.photo.url }}" alt="">
     {% endif %}
   </div>
-  <div class="post-btn-container">
-    <a href="#">
-      <img src="" alt="">
-    </a>
-    <a href="#">
-      <img src="" alt="">
-    </a>
-  </div>
-  <p>좋아요 {{ post.like_count }}개</p>
-  <div class="post-comment-container">
-    <!--post에 연결된 Comment목록을 for문으로 순회하며 아래의 div.post-comment를 반복-->
-    {% for comment in post.comment_set.all %}
-    <div class="post-comment">
-      <a href="" class="comment-author">{{ comment.author }}</a>
-      <span class="comment-content">{{ comment.content }}</span>
-      <a href="" class="comment-tag"></a>
-      <!--<p class="comment-created">{{ comment.created_date }}</p>-->
+  <div class="post-bottom">
+    <div class="post-btn-container">
+      <a href="#">
+        <img src="{% static 'images/post_heart.png' %}" alt="">
+      </a>
+      <a href="#">
+        <img src="{% static 'images/post_comment.png' %}" alt="">
+      </a>
     </div>
-    {% endfor %}
+    <p class="comment">좋아요 {{ post.like_count }}개</p>
+    <div class="post-comment-container">
+      <!--post에 연결된 Comment목록을 for문으로 순회하며 아래의 div.post-comment를 반복-->
+      {% for comment in post.comment_set.all %}
+      <div class="post-comment">
+        <a href="" class="comment-author">{{ comment.author }}</a>
+        <span class="comment-content">{{ comment.content }}</span>
+        <a href="" class="comment-tag"></a>
+        <!--<p class="comment-created">{{ comment.created_date }}</p>-->
+      </div>
+      {% endfor %}
+    </div>
+    <p class="created">{{ post.created_date }}</p>
+    <form action="">
+      <input type="text" placeholder="댓글달기" class="input-comment">
+    </form>
   </div>
-  <p class="created">{{ post.created_date }}</p>
-  <form action="">
-    <input type="text" placeholder="댓글달기">
-  </form>
 </article>

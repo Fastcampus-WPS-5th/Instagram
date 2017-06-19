@@ -1,3 +1,46 @@
+article.post {
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid rgba(0, 0, 0, 0.0975);
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+article.post header {
+  padding: 15px;
+  box-sizing: border-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.0975);
+}
+
+article.post header .post-header-left .header-author {
+  font-weight: bold;
+}
+
 article.post .post-photo-container img {
   width: 100%;
+}
+
+article.post .post-bottom {
+  padding: 15px;
+}
+
+article.post .post-bottom p.comment {
+  margin-bottom: 6px;
+}
+
+article.post .post-bottom .post-comment .comment-author {
+  font-weight: bold;
+  margin-right: 3px;
+}
+
+article.post .post-bottom p.created {
+  font-size: 11px;
+  color: #999;
+  margin-bottom: 3px;
+  margin-top: 3px;
+}
+
+article.post .post-bottom input.input-comment {
+  width: 100%;
+  box-sizing: border-box;
 }

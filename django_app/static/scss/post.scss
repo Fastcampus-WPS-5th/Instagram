@@ -1,5 +1,50 @@
+@import 'variables';
+
 article.post {
+  max-width: 600px;
+  margin: 0 auto;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  background-color: #fff;
+  
+  header {
+    padding: 15px;
+    box-sizing: border-box;
+    border-bottom: 1px solid $color-border;
+    
+    .post-header-left {
+      .header-author {
+        font-weight: bold;
+      }
+    }
+  }
   .post-photo-container {
     img { width: 100%; }
+  }
+  .post-bottom {
+    padding: 15px;
+    
+    p.comment {
+      margin-bottom: 6px;
+    }
+    .post-comment {
+      .comment-author {
+        font-weight: bold;
+        margin-right: 3px;
+      }
+      .comment-content {
+        
+      }
+    }
+    p.created {
+      font-size: 11px;
+      color: $color-text-gray;
+      margin-bottom: 3px;
+      margin-top: 3px;
+    }
+    input.input-comment {
+      width: 100%;
+      box-sizing: border-box;
+    }
   }
 }

@@ -30,6 +30,14 @@ ul, ol {
   padding: 0;
   list-style-type: none;
 }
+.clearfix {
+  &::after {
+    content: '';
+    display: block;
+    height: 0;
+    clear: both;
+  }
+}
 .test {
   padding: 10px;
   color: white;

@@ -24,6 +24,14 @@ article.post .post-bottom {
   padding: 15px;
 }
 
+article.post .post-bottom .post-btn-container .btn-left {
+  float: left;
+}
+
+article.post .post-bottom .post-btn-container .btn-right {
+  float: right;
+}
+
 article.post .post-bottom p.comment {
   margin-bottom: 6px;
 }

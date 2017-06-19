@@ -23,24 +23,37 @@
     {% endif %}
   </div>
   <div class="post-bottom">
-    <div class="post-btn-container">
-      <a href="#">
+    <div class="post-btn-container clearfix">
+      <div class="btn-left">
+        <a href="#">
         <img src="{% static 'images/post_heart.png' %}" alt="">
       </a>
-      <a href="#">
-        <img src="{% static 'images/post_comment.png' %}" alt="">
-      </a>
+        <a href="#">
+          <img src="{% static 'images/post_comment.png' %}" alt="">
+        </a>
+      </div>
+      <div class="btn-right">
+        <a href="{% url 'post:post_modify' post_pk=post.pk %}" class="btn">수정하기</a>
+        <a href="" class="btn">삭제하기</a>
+      </div>
     </div>
     <p class="comment">좋아요 {{ post.like_count }}개</p>
     <div class="post-comment-container">
+      <!--해당 post에 my_comment가 있을 경우 표시-->
+      {% if post.my_comment %}
+        <!--include한 post_comment내에서 'comment'라는 이름으로 쓸 변수에는 post.my_comment를 할당-->
+        {% include 'include/post_comment.html' with comment=post.my_comment style='red' %}
+      {% endif %}
+
       <!--post에 연결된 Comment목록을 for문으로 순회하며 아래의 div.post-comment를 반복-->
       {% for comment in post.comment_set.all %}
-      <div class="post-comment">
-        <a href="" class="comment-author">{{ comment.author }}</a>
-        <span class="comment-content">{{ comment.content }}</span>
-        <a href="" class="comment-tag"></a>
-        <!--<p class="comment-created">{{ comment.created_date }}</p>-->
-      </div>
+        {% if comment != post.my_comment %}
+          <!--
+            include한 post_comment내에서 이미 'comment'라는 이름을 사용중이며
+            for문에서 사용하는 각 loop의 아이템 이름 'comment'와 일치
+          -->
+          {% include 'include/post_comment.html' %}
+        {% endif %}
       {% endfor %}
     </div>
     <p class="created">{{ post.created_date }}</p>

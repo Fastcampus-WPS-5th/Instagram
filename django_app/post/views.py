@@ -148,15 +148,20 @@ def post_delete(request, post_pk):
         post = get_object_or_404(Post, pk=post_pk)
         post.delete()
         return redirect('post:post_list')
+    else:
+        # post_delete시에 확인창 띄워주기
+        pass
 
 
 def comment_create(request, post_pk):
     # POST요청을 받아 Comment객체를 생성 후 post_detail페이지로 redirect
+    # CommentForm을 만들어서 해당 ModelForm안에서 생성/수정가능하도록 사용
     pass
 
 
 def comment_modify(request, post_pk):
     # 수정
+    # CommentForm을 만들어서 해당 ModelForm안에서 생성/수정가능하도록 사용
     pass
 
 

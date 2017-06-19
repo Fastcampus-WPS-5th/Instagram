@@ -1,0 +1,12 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="content">
+	<form action="" method="POST" enctype="multipart/form-data">
+		{% csrf_token %}
+		<img src="{{ form.instance.photo.url }}" alt="" width="200">
+		{% include 'include/field_set.html' with form=form %}
+		<button type="submit" class="btn">등록</button>
+	</form>
+</div>
+{% endblock %}

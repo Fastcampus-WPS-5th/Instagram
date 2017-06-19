@@ -57,7 +57,7 @@ class PostForm(forms.ModelForm):
             else:
                 instance.my_comment = Comment.objects.create(
                     post=instance,
-                    author=author,
+                    author=instance.author,
                     content=comment_string
                 )
             # OTO필드의 저장을 위해 Post의 save()호출

@@ -36,6 +36,11 @@ article.post .post-bottom p.comment {
   margin-bottom: 6px;
 }
 
+article.post .post-bottom .post-comment > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 article.post .post-bottom .post-comment .comment-author {
   font-weight: bold;
   margin-right: 3px;

@@ -8,7 +8,7 @@ from django.urls import reverse
 from post.decorators import post_owner
 from post.forms import CommentForm
 from ..forms import PostForm
-from ..models import Post
+from ..models import Post, Tag
 
 # 자동으로 Django에서 인증에 사용하는 User모델클래스를 리턴
 #   https://docs.djangoproject.com/en/1.11/topics/auth/customizing/#django.contrib.auth.get_user_model
@@ -20,6 +20,7 @@ __all__ = (
     'post_create',
     'post_modify',
     'post_delete',
+    'hashtag_post_list',
 )
 
 
@@ -29,6 +30,11 @@ def post_list(request):
 
     # 각 포스트에 대해 최대 4개까지의 댓글을 보여주도록 템플릿에 설정
     # 각 post하나당 CommentForm을 하나씩 가지도록 리스트 컴프리헨션 사용
+
+    # 숙제
+    # post_list와 hashtag_post_list에서 pagination을 이용해서
+    # 한 번에 10개씩만 표시하도록 수정
+    #   https://docs.djangoproject.com/en/1.11/topics/pagination/
     posts = Post.objects.all()
     context = {
         'posts': posts,
@@ -182,4 +188,19 @@ def hashtag_post_list(request, tag_name):
     # 4. 해당 쿼리셋을 적절히 리턴
     # 5. Comment의 make_html_and_add_tags()메서드의
     #    a태그를 생성하는 부분에 이 view에 연결되는 URL을 삽입
-    pass
+    tag = get_object_or_404(Tag, name=tag_name)
+
+    # Post에 달린 댓글의 Tag까지 검색할 때
+    # posts = Post.objects.filter(comment__tags=tag).distinct()
+
+    # Post의 my_comment에 있는 Tag만 검색할 때
+    posts = Post.objects.filter(my_comment__tags=tag)
+    posts_count = posts.count()
+
+    context = {
+        'tag': tag,
+        'posts': posts,
+        'posts_count': posts_count,
+    }
+    return render(request, 'post/hashtag_post_list.html', context)
+

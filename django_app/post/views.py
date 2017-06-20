@@ -144,13 +144,15 @@ def post_modify(request, post_pk):
 def post_delete(request, post_pk):
     # post_pk에 해당하는 Post에 대한 delete요청만을 받음
     # 처리완료후에는 post_list페이지로 redirect
+    post = get_object_or_404(Post, pk=post_pk)
     if request.method == 'POST':
-        post = get_object_or_404(Post, pk=post_pk)
         post.delete()
         return redirect('post:post_list')
     else:
-        # post_delete시에 확인창 띄워주기
-        pass
+        context = {
+            'post': post,
+        }
+        return render(request, 'post/post_delete.html', context)
 
 
 def comment_create(request, post_pk):

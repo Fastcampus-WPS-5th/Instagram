@@ -1,0 +1,13 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="content">
+	<img src="{{ post.photo.url }}" alt="" width="200">
+	<p>Post (pk: {{ post.pk }})를 삭제하시겠습니까?</p>
+	<form action="" method="POST" class="form-inline">
+		{% csrf_token %}
+		<button type="submit" class="btn">삭제</button>
+	</form>
+	<a href="{% url 'post:post_detail' post_pk=post.pk %}" class="btn">돌아가기</a>
+</div>
+{% endblock %}

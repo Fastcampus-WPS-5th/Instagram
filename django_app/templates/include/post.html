@@ -35,11 +35,7 @@
       <div class="btn-right">
         {% if user == post.author %}
         <a href="{% url 'post:post_modify' post_pk=post.pk %}" class="btn">수정하기</a>
-        <form action="{% url 'post:post_delete' post_pk=post.pk %}" method="POST" class="form-inline">
-          {% csrf_token %}
-          <button type="submit" class="btn">삭제하기</button>
-        </form>
-
+        <a href="{% url 'post:post_delete' post_pk=post.pk %}" class="btn">삭제하기</a>
         {% endif %}
       </div>
     </div>

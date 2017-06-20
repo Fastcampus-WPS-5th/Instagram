@@ -4,5 +4,9 @@
   <a href="" class="comment-tag"></a>
   {% if request.user == comment.author %}
   <a href="{% url 'post:comment_modify' comment_pk=comment.pk %}?next={{ request.path }}#post-{{ comment.post.pk }}" class="btn btn-xs">수정</a>
+  <form action="{% url 'post:comment_delete' comment_pk=comment.pk %}?next={{ request.path }}#post-{{ comment.post.pk }}" method="POST" class="form-inline">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-xs">삭제</button>
+  </form>
   {% endif %}
 </div>

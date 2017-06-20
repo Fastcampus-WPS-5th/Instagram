@@ -62,6 +62,13 @@ def comment_modify(request, comment_pk):
     return render(request, 'post/comment_modify.html', context)
 
 
-def comment_delete(request, post_pk, comment_pk):
-    # POST요청을 받아 Comment객체를 delete, 이후 post_detail페이지로 redirect
-    pass
+@comment_owner
+@require_POST
+@login_required
+def comment_delete(request, comment_pk):
+    # comment_delete이후에 원래 페이지로 돌아갈 수 있도록 처리해보기
+    #   (리스트에서 삭제하면 해당 리스트의 post위치로)
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    post = comment.post
+    comment.delete()
+    return redirect('post:post_detail', post_pk=post.pk)

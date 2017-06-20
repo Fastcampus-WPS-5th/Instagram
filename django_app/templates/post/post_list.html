@@ -6,10 +6,10 @@
 		include
 			https://docs.djangoproject.com/en/1.11/ref/templates/builtins/#include
 	-->
+	<div>
+		<a href="{% url 'post:post_create' %}" class="btn">Post Create</a>
+	</div>
 	{% for post in posts %}
-		<div>
-			<a href="{% url 'post:post_create' %}" class="btn">Post Create</a>
-		</div>
 		{% include 'include/post.html' with type='list' %}
 	{% endfor %}
 {% endblock %}

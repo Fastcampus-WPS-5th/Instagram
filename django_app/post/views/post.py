@@ -32,9 +32,10 @@ def post_list(request):
     # 각 post하나당 CommentForm을 하나씩 가지도록 리스트 컴프리헨션 사용
 
     # 숙제
-    # post_list와 hashtag_post_list에서 pagination을 이용해서
-    # 한 번에 10개씩만 표시하도록 수정
+    # 1. post_list와 hashtag_post_list에서 pagination을 이용해서
+    #    한 번에 10개씩만 표시하도록 수정
     #   https://docs.djangoproject.com/en/1.11/topics/pagination/
+    # 2. 좋아요 버튼 구현 및 좋아요 한 사람 목록 출력
     posts = Post.objects.all()
     context = {
         'posts': posts,

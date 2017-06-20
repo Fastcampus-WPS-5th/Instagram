@@ -165,3 +165,21 @@ def post_delete(request, post_pk):
             'post': post,
         }
         return render(request, 'post/post_delete.html', context)
+
+
+def hashtag_post_list(request, tag_name):
+    # 1. template생성
+    #   post/hashtag_post_list.html
+    #   tag_name과 post_list, post_count변수를 전달받아 출력
+    #   tag_name과 post_count는 최상단 제목에 사용
+    #   post_list는 순회하며 post_thumbnail에 해당하는 html을 구성해서 보여줌
+    #
+    # 2. 쿼리셋 작성
+    #   특정 tag_name이 해당 Post에 포함된 Comment의 tags에 포함되어있는 Post목록 쿼리 생성
+    #        posts = Post.objects.filter()
+    #
+    # 3. urls.py와 이 view를 연결
+    # 4. 해당 쿼리셋을 적절히 리턴
+    # 5. Comment의 make_html_and_add_tags()메서드의
+    #    a태그를 생성하는 부분에 이 view에 연결되는 URL을 삽입
+    pass

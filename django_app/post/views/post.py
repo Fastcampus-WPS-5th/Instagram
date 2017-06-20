@@ -1,17 +1,26 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
 from django.urls import reverse
 
 from post.decorators import post_owner
-from .forms import PostForm
-from .models import Post
+from post.forms import CommentForm
+from ..forms import PostForm
+from ..models import Post
 
 # 자동으로 Django에서 인증에 사용하는 User모델클래스를 리턴
 #   https://docs.djangoproject.com/en/1.11/topics/auth/customizing/#django.contrib.auth.get_user_model
 User = get_user_model()
+
+__all__ = (
+    'post_list',
+    'post_detail',
+    'post_create',
+    'post_modify',
+    'post_delete',
+)
 
 
 def post_list(request):
@@ -19,9 +28,11 @@ def post_list(request):
     # post/post_list.html을 template으로 사용하도록 한다
 
     # 각 포스트에 대해 최대 4개까지의 댓글을 보여주도록 템플릿에 설정
+    # 각 post하나당 CommentForm을 하나씩 가지도록 리스트 컴프리헨션 사용
     posts = Post.objects.all()
     context = {
         'posts': posts,
+        'comment_form': CommentForm(),
     }
     return render(request, 'post/post_list.html', context)
 
@@ -34,7 +45,7 @@ def post_detail(request, post_pk):
     # 가져오는 과정에서 예외처리를 한다 (Model.DoesNotExist)
     try:
         post = Post.objects.get(pk=post_pk)
-    except Post.DoesNotExist as e:
+    except Post.DoesNotExist:
         # 1. 404 Notfound를 띄워준다
         # return HttpResponseNotFound('Post not found, detail: {}'.format(e))
 
@@ -153,24 +164,3 @@ def post_delete(request, post_pk):
             'post': post,
         }
         return render(request, 'post/post_delete.html', context)
-
-
-def comment_create(request, post_pk):
-    # POST요청을 받아 Comment객체를 생성 후 post_detail페이지로 redirect
-    # CommentForm을 만들어서 해당 ModelForm안에서 생성/수정가능하도록 사용
-    pass
-
-
-def comment_modify(request, post_pk):
-    # 수정
-    # CommentForm을 만들어서 해당 ModelForm안에서 생성/수정가능하도록 사용
-    pass
-
-
-def comment_delete(request, post_pk, comment_pk):
-    # POST요청을 받아 Comment객체를 delete, 이후 post_detail페이지로 redirect
-    pass
-
-
-def post_anyway(request):
-    return redirect('post:post_list')

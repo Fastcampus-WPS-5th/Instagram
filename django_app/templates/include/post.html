@@ -59,8 +59,10 @@
       {% endfor %}
     </div>
     <p class="created">{{ post.created_date }}</p>
-    <form action="">
-      <input type="text" placeholder="댓글달기" class="input-comment">
+    <form action="{% url 'post:comment_create' post_pk=post.pk %}" method="POST">
+      {% csrf_token %}
+      <!--<input type="text" placeholder="댓글달기" class="input-comment">-->
+      {{ comment_form.content }}
     </form>
   </div>
 </article>

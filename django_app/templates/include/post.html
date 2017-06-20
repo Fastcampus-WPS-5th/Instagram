@@ -1,5 +1,5 @@
 {% load static %}
-<article class="post">
+<article id="post-{{ post.pk }}" class="post">
   <header>
     <div class="post-header-left">
       <img src="" alt="">
@@ -59,9 +59,8 @@
       {% endfor %}
     </div>
     <p class="created">{{ post.created_date }}</p>
-    <form action="{% url 'post:comment_create' post_pk=post.pk %}" method="POST">
+    <form action="{% url 'post:comment_create' post_pk=post.pk %}?next={{ request.path }}#post-{{ post.pk }}" method="POST">
       {% csrf_token %}
-      <!--<input type="text" placeholder="댓글달기" class="input-comment">-->
       {{ comment_form.content }}
     </form>
   </div>

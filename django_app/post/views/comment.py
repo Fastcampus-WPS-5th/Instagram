@@ -4,6 +4,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from post.decorators import comment_owner
+from utils.templatetags.custom_tags import query_string
 from ..forms import CommentForm
 from ..models import Post, Comment
 

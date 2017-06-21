@@ -4,6 +4,7 @@ article.post {
   border: 1px solid rgba(0, 0, 0, 0.0975);
   border-radius: 4px;
   background-color: #fff;
+  margin-bottom: 60px;
 }
 
 article.post header {
@@ -14,6 +15,15 @@ article.post header {
 
 article.post header .post-header-left .header-author {
   font-weight: bold;
+}
+
+article.post .post-photo-container {
+  font-size: 0;
+  line-height: 0;
+}
+
+article.post .post-photo-container a {
+  display: block;
 }
 
 article.post .post-photo-container img {
@@ -28,17 +38,31 @@ article.post .post-bottom .post-btn-container .btn-left {
   float: left;
 }
 
+article.post .post-bottom .post-btn-container .btn-left > a {
+  text-decoration: none;
+  margin-right: 5px;
+}
+
+article.post .post-bottom .post-btn-container .btn-left > a img {
+  width: 24px;
+}
+
 article.post .post-bottom .post-btn-container .btn-right {
   float: right;
 }
 
 article.post .post-bottom p.comment {
+  margin-top: 4px;
   margin-bottom: 6px;
 }
 
 article.post .post-bottom .post-comment > * {
   display: inline-block;
   vertical-align: middle;
+}
+
+article.post .post-bottom .post-comment > p {
+  margin: 0;
 }
 
 article.post .post-bottom .post-comment .comment-author {

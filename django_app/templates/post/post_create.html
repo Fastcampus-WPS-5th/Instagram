@@ -2,6 +2,7 @@
 
 {% block content %}
 <div class="content">
+	<h3>Post create</h3>
 	<form action="" method="POST" enctype="multipart/form-data">
 		{% csrf_token %}
 		{% include 'include/field_set.html' with form=form %}

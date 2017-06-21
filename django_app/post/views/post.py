@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from django.template import loader
@@ -24,7 +25,7 @@ __all__ = (
 )
 
 
-def post_list(request):
+def post_list_original(request):
     # 모든 Post목록을 'posts'라는 key로 context에 담아 return render처리
     # post/post_list.html을 template으로 사용하도록 한다
 
@@ -37,6 +38,36 @@ def post_list(request):
     #   https://docs.djangoproject.com/en/1.11/topics/pagination/
     # 2. 좋아요 버튼 구현 및 좋아요 한 사람 목록 출력
     posts = Post.objects.all()
+    context = {
+        'posts': posts,
+        'comment_form': CommentForm(),
+    }
+    return render(request, 'post/post_list.html', context)
+
+
+def post_list(request):
+    # 전체 Post목록 QuerySet생성 (아직 평가되지 않음)
+    all_posts = Post.objects.all()
+    # Paginator객체 생성, 한 페이지당 3개씩
+    p = Paginator(all_posts, 3)
+
+    # GET parameter에서 'page'값을 page_num변수에 할당
+    page_num = request.GET.get('page')
+
+    # Paginator객체에서 page메서드로 page_num변수를 인수로 전달하여 호출
+    try:
+        posts = p.page(page_num)
+
+    # 만약 page_num변수가 int형으로 변환이 불가능하면
+    except PageNotAnInteger:
+        # 1페이지에 해당하는 Post object list를 posts에 할당
+        posts = p.page(1)
+    # 만약 page_num에 객체가 없을 경우 (빈 페이지)
+    except EmptyPage:
+        # 마지막 페이지에 해당하는 Post object list를 posts에 할당
+        posts = p.page(p.num_pages)
+
+    # render에 사용할 dict객체
     context = {
         'posts': posts,
         'comment_form': CommentForm(),

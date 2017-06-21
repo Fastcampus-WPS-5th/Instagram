@@ -6,6 +6,7 @@ article.post {
   border: 1px solid $color-border;
   border-radius: 4px;
   background-color: #fff;
+  margin-bottom: 60px;
   
   header {
     padding: 15px;
@@ -19,6 +20,9 @@ article.post {
     }
   }
   .post-photo-container {
+    font-size: 0;
+    line-height: 0;
+    a { display: block; }
     img { width: 100%; }
   }
   .post-bottom {
@@ -27,6 +31,14 @@ article.post {
     .post-btn-container {
       .btn-left {
         float: left;
+        
+        > a {
+          text-decoration: none;
+          margin-right: 5px;
+          img {
+            width: 24px;
+          }
+        }
       }
       .btn-right {
         float: right;
@@ -34,12 +46,16 @@ article.post {
     }
     
     p.comment {
+      margin-top: 4px;
       margin-bottom: 6px;
     }
     .post-comment {
       > * {
         display: inline-block;
         vertical-align: middle;
+      }
+      > p {
+        margin: 0;
       }
       .comment-author {
         font-weight: bold;

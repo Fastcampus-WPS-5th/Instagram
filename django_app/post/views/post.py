@@ -70,7 +70,8 @@ def post_list(request):
     # render에 사용할 dict객체
     context = {
         'posts': posts,
-        'comment_form': CommentForm(),
+        # 'comment_form': CommentForm(),
+        'comment_form': CommentForm(auto_id=False),
     }
     return render(request, 'post/post_list.html', context)
 

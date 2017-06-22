@@ -50,10 +50,11 @@ def comment_modify(request, comment_pk):
     if request.method == 'POST':
         # Form을 이용해 객체를 update시킴 (data에 포함된 부분만 update됨)
         form = CommentForm(data=request.POST, instance=comment)
-        form.save()
-        if next:
-            return redirect(next)
-        return redirect('post:post_detail', post_pk=comment.post.pk)
+        if form.is_valid():
+            form.save()
+            if next:
+                return redirect(next)
+            return redirect('post:post_detail', post_pk=comment.post.pk)
     else:
         # CommentForm에 기존 comment인스턴스의 내용을 채운 bound form
         form = CommentForm(instance=comment)

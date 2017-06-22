@@ -69,7 +69,12 @@ class User(AbstractUser):
 
     def is_follow(self, user):
         # 해당 user를 내가 follow하고 있는지 bool여부를 반환
-        pass
+        # ModelManager.exists()
+        return self.follow_relations.filter(to_user=user).exists()
+
+    def is_follower(self, user):
+        # 해당 user가 나를 follow하고 있는지 bool여부를 반환
+        return self.follower_relations.filter(from_user=user).exists()
 
     def follow_toggle(self, user):
         # 이미 follow상태면 unfollow로, 아닐경우 follow상태로 만듬
@@ -78,6 +83,17 @@ class User(AbstractUser):
             relation.delete()
         else:
             return relation
+
+    @property
+    def following(self):
+        # https://docs.djangoproject.com/en/1.11/ref/models/querysets/#in
+        relations = self.follow_relations.all()
+        return User.objects.filter(pk__in=relations.values('pk'))
+
+    @property
+    def followers(self):
+        relations = self.follower_relations.all()
+        return User.objects.filter(pk__in=relations.values('pk'))
 
 
 class Relation(models.Model):

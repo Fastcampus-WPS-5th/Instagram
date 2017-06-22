@@ -27,7 +27,20 @@
     <div class="post-btn-container clearfix">
       <div class="btn-left">
         <a href="#">
-        <img src="{% static 'images/post_heart.png' %}" alt="">
+          <!--
+            post:post_like_toggle로 요청하는 form구현
+          -->
+          <form action="{% url 'post:post_like_toggle' post_pk=post.pk %}" method="POST" class="form-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn">
+              {% if user in post.like_users.all %}
+              <img src="{% static 'images/post_like.png' %}" alt="">
+              {% else %}
+              <img src="{% static 'images/post_unlike.png' %}" alt="">
+              {% endif %}
+            </button>
+          </form>
+
       </a>
         <a href="#">
           <img src="{% static 'images/post_comment.png' %}" alt="">
@@ -40,7 +53,17 @@
         {% endif %}
       </div>
     </div>
-    <p class="comment">좋아요 {{ post.like_count }}개</p>
+    <p class="comment">
+      {% if post.like_users.exists %}
+        {% if post.like_users.count > 10 %}
+        <span>좋아요 {{ post.like_users.count }}개</span>
+        {% else %}
+        <span>{{ post.like_users.all|join:', ' }}</span>님이 좋아합니다.
+        {% endif %}
+      {% else %}
+      <span>처음으로 좋아요를 눌러보세요</span>
+      {% endif %}
+    </p>
     <div class="post-comment-container">
       <!--해당 post에 my_comment가 있을 경우 표시-->
       {% if post.my_comment %}

@@ -15,6 +15,7 @@ class User(AbstractUser):
         friend : 나와 서로 follow하고 있는 관계
         friends : 나와 서로 follow하고 있는 모든 관계
         없음 : 내가 follow하고 있는 사람 1명
+            (나는 저 사람의 follower이다 또는 나는 저 사람을 follow하고 있다 라고 표현)
 
     ex) 내가 박보영, 최유정, 고성현을 follow하고 고성현과 김수정은 나를 follow한다
         나의 followers는 고성현, 김수정

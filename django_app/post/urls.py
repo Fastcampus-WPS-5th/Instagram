@@ -30,6 +30,9 @@ urlpatterns = [
     # post_delete와 매칭
     url(r'^(?P<post_pk>\d+)/delete/$', views.post_delete, name='post_delete'),
 
+    # post_like와 매칭
+    url(r'^(?P<post_pk>\d+)/like-toggle/$', views.post_like_toggle, name='post_like_toggle'),
+
     # comment_create와 매칭
     url(r'^(?P<post_pk>\d+)/comment/create/$', views.comment_create, name='comment_create'),
 

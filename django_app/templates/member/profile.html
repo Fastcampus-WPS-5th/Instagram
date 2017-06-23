@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<div class="content">
+<div class="content profile">
 	<h3>{{ cur_user }}</h3>
 
 	{% if user != cur_user %}
@@ -29,6 +29,20 @@
 			<a href="{% url 'member:profile' user_pk=u.pk %}" class="btn">{{ u }}</a>
 		</div>
 	{% endfor %}
+
+	<ul class="profile-photo-list">
+		{% for post in posts %}
+		<li>
+			<img src="{{ post.photo.url }}" alt="">
+		</li>
+		{% endfor %}
+	</ul>
+
+	{% if request.GET.page %}
+	<a href="?page={{ request.GET.page|add:1 }}" class="btn btn-lg btn-primary btn-block">더 불러오기</a>
+	{% else %}
+	<a href="?page=2" class="btn btn-lg btn-primary btn-block">더 불러오기</a>
+	{% endif %}
 
 </div>
 {% endblock %}

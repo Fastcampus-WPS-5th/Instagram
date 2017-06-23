@@ -5,6 +5,7 @@ from django.contrib.auth import \
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
+from post.models import Post
 from .forms import LoginForm, SignupForm
 
 User = get_user_model()
@@ -123,6 +124,7 @@ def signup(request):
 
 
 def profile(request, user_pk=None):
+    NUM_POSTS_PER_PAGE = 3
     # 0. urls.py와 연결
     #   urls.py참조
     #
@@ -132,7 +134,6 @@ def profile(request, user_pk=None):
     #        return render(인수 전달)
     # user = User.objects.get(pk=user_pk)
     # DoesNotExist Exception발생시 raise Http404
-
     """
     1. GET parameter로 'page'를 받아 처리
         page가 1일경우 Post의 author가 해당 User인
@@ -142,7 +143,18 @@ def profile(request, user_pk=None):
 
         만약 실제 Post개수보다 큰 page가 왔을 경우, 최대한의 값을 보여줌
         'page'키의 값이 오지 않을 경우, int로 변환 불가능한 경우, 1보다 작은값일 경우 -> 1로 처리
+    """
+    # GET parameter에 들어온 'page'값 처리
+    page = request.GET.get('page', 1)
+    try:
+        page = int(page) if int(page) > 1 else 1
+    except ValueError:
+        page = 1
+    except Exception as e:
+        page = 1
+        print(e)
 
+    """
     2. def follow_toggle(request, user_pk)
         위 함수기반 뷰를 구현
             login_required
@@ -163,8 +175,13 @@ def profile(request, user_pk=None):
         user = get_object_or_404(User, pk=user_pk)
     else:
         user = request.user
+
+    # page * 9만큼의 Post QuerySet을 리턴. 정렬순서는 created_date 내림차순
+    posts = Post.objects.filter(author=user).order_by('-created_date')[:page * NUM_POSTS_PER_PAGE]
+
     context = {
         'cur_user': user,
+        'posts': posts,
     }
     return render(request, 'member/profile.html', context)
 

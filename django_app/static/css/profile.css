@@ -1,0 +1,16 @@
+ul.profile-photo-list {
+  font-size: 0;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+ul.profile-photo-list li {
+  display: inline-block;
+  width: calc(100% / 3);
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+ul.profile-photo-list li img {
+  width: 100%;
+}

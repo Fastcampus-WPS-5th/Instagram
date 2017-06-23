@@ -27,6 +27,7 @@ class User(AbstractUser):
     """
     # 이 User모델을 AUTH_USER_MODEL로 사용하도록 settings.py에 설정
     nickname = models.CharField(max_length=24, null=True, unique=True)
+    img_profile = models.ImageField(upload_to='user', blank=True)
     relations = models.ManyToManyField(
         'self',
         through='Relation',

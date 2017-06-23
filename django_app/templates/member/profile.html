@@ -3,19 +3,24 @@
 
 {% block content %}
 <div class="content profile">
+	<!--nickname, img_profile을 수정할 수 있는 form구현-->
 	<h3>{{ cur_user }}</h3>
+	<img src="{{ cur_user.img_profile.url }}" alt="" width="150">
 
-	{% if user != cur_user %}
-
-		<!--follow_toggle뷰를 사용해 아래 버튼들이 동작하도록 구현-->
-		<form action="{% url 'member:follow_toggle' user_pk=cur_user.pk %}" method="post">
-			{% csrf_token %}
-			{% if cur_user in user.following %}
-			<button type="submit" class="btn">팔로우 취소</button>
-			{% else %}
-			<button type="submit" class="btn">팔로우</button>
-			{% endif %}
-		</form>
+	{% if user.is_authenticated %}
+		{% if user != cur_user %}
+			<!--follow_toggle뷰를 사용해 아래 버튼들이 동작하도록 구현-->
+			<form action="{% url 'member:follow_toggle' user_pk=cur_user.pk %}" method="post">
+				{% csrf_token %}
+				{% if cur_user in user.following %}
+				<button type="submit" class="btn">팔로우 취소</button>
+				{% else %}
+				<button type="submit" class="btn">팔로우</button>
+				{% endif %}
+			</form>
+		{% else %}
+		<a href="{% url 'member:profile_edit' %}" class="btn">프로필 수정하기</a>
+		{% endif %}
 	{% endif %}
 
 

@@ -38,10 +38,8 @@
 		{% endfor %}
 	</ul>
 
-	{% if request.GET.page %}
-	<a href="?page={{ request.GET.page|add:1 }}" class="btn btn-lg btn-primary btn-block">더 불러오기</a>
-	{% else %}
-	<a href="?page=2" class="btn btn-lg btn-primary btn-block">더 불러오기</a>
+	{% if next_page %}
+	<a href="?page={{ next_page }}" class="btn btn-lg btn-primary btn-block">더 불러오기</a>
 	{% endif %}
 
 </div>

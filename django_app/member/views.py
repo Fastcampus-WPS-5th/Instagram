@@ -2,8 +2,10 @@ from django.contrib.auth import \
     authenticate, \
     login as django_login, \
     logout as django_logout, get_user_model
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.views.decorators.http import require_POST
 
 from post.models import Post
 from .forms import LoginForm, SignupForm
@@ -124,7 +126,7 @@ def signup(request):
 
 
 def profile(request, user_pk=None):
-    NUM_POSTS_PER_PAGE = 6
+    num_posts_per_page = 6
     # 0. urls.py와 연결
     #   urls.py참조
     #
@@ -177,10 +179,10 @@ def profile(request, user_pk=None):
         user = request.user
 
     # page * 9만큼의 Post QuerySet을 리턴. 정렬순서는 created_date 내림차순
-    posts = user.post_set.order_by('-created_date')[:page * NUM_POSTS_PER_PAGE]
+    posts = user.post_set.order_by('-created_date')[:page * num_posts_per_page]
     post_count = user.post_set.count()
     # next_page = 현재 page에서 보여주는 Post개수보다 post_count가 클 경우 전달받은 page + 1, 아닐경우 None할당
-    next_page = page + 1 if post_count > page * NUM_POSTS_PER_PAGE else None
+    next_page = page + 1 if post_count > page * num_posts_per_page else None
 
     context = {
         'cur_user': user,
@@ -197,3 +199,18 @@ def profile(request, user_pk=None):
     # 3. 현재 로그인한 유저가 해당 유저(cur_user)를 팔로우하고 있는지 여부 보여주기
     #   3-1. 팔로우하고 있다면 '팔로우 해제'버튼, 아니라면 '팔로우'버튼 띄워주기
     # 4~ -> def follow_toggle(request)뷰 생성
+
+
+@require_POST
+@login_required
+def follow_toggle(request, user_pk):
+    # 'next' GET parameter값을 가져옴
+    next = request.GET.get('next')
+    # follow를 toggle할 대상유저
+    target_user = get_object_or_404(User, pk=user_pk)
+    # 요청 유저 (로그인한 유저)의 follow_toggle()메서드 실행
+    request.user.follow_toggle(target_user)
+    # next가 있으면 해당 위치로 아닐경우 target_user의 profile페이지로 이동
+    if next:
+        return redirect(next)
+    return redirect('member:profile', user_pk=user_pk)

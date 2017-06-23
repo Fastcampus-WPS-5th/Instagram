@@ -5,6 +5,7 @@
 <div class="content profile">
 	<!--nickname, img_profile을 수정할 수 있는 form구현-->
 	<h3>{{ cur_user }}</h3>
+
 	<img src="{{ cur_user.img_profile.url }}" alt="" width="150">
 
 	{% if user.is_authenticated %}

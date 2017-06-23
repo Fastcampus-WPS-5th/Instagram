@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from utils.fields import CustomImageField
+
 
 class User(AbstractUser):
     """
@@ -27,7 +29,11 @@ class User(AbstractUser):
     """
     # 이 User모델을 AUTH_USER_MODEL로 사용하도록 settings.py에 설정
     nickname = models.CharField(max_length=24, null=True, unique=True)
-    img_profile = models.ImageField(upload_to='user', blank=True)
+    img_profile = CustomImageField(
+        upload_to='user',
+        blank=True,
+        # default_static_image='images/profile.png',
+    )
     relations = models.ManyToManyField(
         'self',
         through='Relation',

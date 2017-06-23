@@ -66,14 +66,10 @@
 					{% else %}
 					<form action="{% url 'member:login' %}" method="POST" class="form-inline-login">
 						{% csrf_token %}
-						<!--<label for="id-login-username">ID:</label>-->
-						<!--<input id="id-login-username" type="text" name="username">-->
-						<!--&nbsp;-->
-						<!--<label for="id-login-password">PW:</label>-->
-						<!--<input id="id-login-password" type="password" name="password">-->
 						{{ login_form }}
 						<button type="submit" class="btn">로그인</button>
 						<a href="{% url 'member:signup' %}" class="btn">회원가입</a>
+						<a href="https://www.facebook.com/v2.9/dialog/oauth?client_id={{ facebook_app_id }}&redirect_uri=http://localhost:8000/post/" class="btn btn-primary">페이스북으로 로그인</a>
 					</form>
 					<!--<a href="{% url 'member:login' %}" class="btn">로그인</a>-->
 					{% endif %}

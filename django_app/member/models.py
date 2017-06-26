@@ -13,12 +13,13 @@ from utils.fields import CustomImageField
 class UserManager(DefaultUserManager):
     def get_or_create_facebook_user(self, user_info):
         username = '{}_{}_{}'.format(
-            User.USER_TYPE_FACEBOOK,
+            self.model.USER_TYPE_FACEBOOK,
             settings.FACEBOOK_APP_ID,
             user_info['id']
         )
-        user, user_created = User.objects.get_or_create(
+        user, user_created = self.get_or_create(
             username=username,
+            user_type=self.model.USER_TYPE_FACEBOOK,
             defaults={
                 'last_name': user_info.get('last_name', ''),
                 'first_name': user_info.get('first_name', ''),

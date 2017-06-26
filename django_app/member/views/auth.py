@@ -220,6 +220,14 @@ def facebook_login(request):
         url_user_info = 'https://graph.facebook.com/v2.9/{user_id}'.format(user_id=user_id)
         url_user_info_params = {
             'access_token': token,
+            'fields': ','.join([
+                'id',
+                'name',
+                'first_name',
+                'last_name',
+                'picture',
+                'gender',
+            ])
         }
         response = requests.get(url_user_info, params=url_user_info_params)
         result = response.json()

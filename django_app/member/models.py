@@ -38,15 +38,17 @@ class UserManager(DefaultUserManager):
                 user.pk,
                 file_ext
             )
+            # Python tempfile
+            # https://docs.python.org/3/library/tempfile.html
             # 이미지파일을 임시저장할 파일객체
-            temp_file = NamedTemporaryFile(delete=False)
+            temp_file = NamedTemporaryFile()
             # 프로필 이미지 URL에 대한 get요청 (이미지 다운로드)
             response = requests.get(url_picture)
             # 요청 결과를 temp_file에 기록
             temp_file.write(response.content)
             # ImageField의 save()메서드를 호출해서 해당 임시파일객체를 주어진 이름의 파일로 저장
             # 저장하는 파일명은 위에서 만든 <유저pk.주어진파일확장자> 를 사용
-            user.img_profile.save(file_name, File(temp_file))
+            user.img_profile.save(file_name, temp_file)
         return user
 
 

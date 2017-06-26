@@ -6,5 +6,16 @@
 	<form action="">
 		<input type="text" name="q" placeholder="YouTube에서 검색할 키워드를 입력해주세요">
 	</form>
+
+	<div>
+		<ul>
+			{% for item in response.items %}
+			<li>
+				<img src="{{ item.snippet.thumbnails.high.url }}" alt="">
+				<a href="https://www.youtube.com/watch?v={{ item.id.videoId }}}">{{ item.snippet.title }}</a>
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
 </div>
 {% endblock %}

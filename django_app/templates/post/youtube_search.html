@@ -8,11 +8,12 @@
 	</form>
 
 	<div>
+		<h4>{{ re_pattern }}</h4>
+		<h4>{{ query }}</h4>
 		<ul>
-			{% for item in response.items %}
+			{% for video in videos %}
 			<li>
-				<img src="{{ item.snippet.thumbnails.high.url }}" alt="">
-				<a href="https://www.youtube.com/watch?v={{ item.id.videoId }}}">{{ item.snippet.title }}</a>
+				{{ video.title }}
 			</li>
 			{% endfor %}
 		</ul>

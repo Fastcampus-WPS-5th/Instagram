@@ -3,7 +3,6 @@ import re
 import requests
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, UserManager as DefaultUserManager
-from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 from django.db import models
 

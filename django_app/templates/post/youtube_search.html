@@ -12,8 +12,14 @@
 		<h4>{{ query }}</h4>
 		<ul>
 			{% for video in videos %}
-			<li>
-				{{ video.title }}
+			<li style="margin-bottom: 10px;">
+				<img src="{{ video.url_thumbnail }}" alt="" width="200">
+				<div>{{ video.title }}</div>
+				<form action="{% url 'post:youtube_post_create' %}" method="post">
+					{% csrf_token %}
+					<input type="hidden" name="video_pk" value="{{ video.pk }}">
+					<button type="submit" class="btn btn-primary">포스팅하기</button>
+				</form>
 			</li>
 			{% endfor %}
 		</ul>

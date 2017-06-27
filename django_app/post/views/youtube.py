@@ -1,11 +1,14 @@
 import requests
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.http import require_POST
 
-from post.models import Video
+from post.models import Video, Post, Comment
 
 __all__ = (
     'youtube_search',
+    'post_create_with_video',
 )
 
 
@@ -89,3 +92,25 @@ def youtube_search(request):
         # 해당 변수를 템플릿에서 표시
         context = {}
     return render(request, 'post/youtube_search.html', context)
+
+
+@require_POST
+@login_required
+def post_create_with_video(request):
+    # POST요청에서 video_pk값을 받음
+    video_pk = request.POST['video_pk']
+    # 받은 video_pk에 해당하는 Video인스턴스
+    video = get_object_or_404(Video, pk=video_pk)
+
+    # 해당 video를 갖는 Post생성
+    post = Post.objects.create(
+        author=request.user,
+        video=video,
+    )
+    # 생성한 Post객체의 my_comment에 해당하는 Comment생성
+    post.my_comment = Comment.objects.create(
+        post=post,
+        author=request.user,
+        content=video.title
+    )
+    return redirect('post:post_detail', post_pk=post.pk)

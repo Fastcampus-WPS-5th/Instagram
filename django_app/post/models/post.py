@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
 
+from utils.fields import CustomImageField
+
 __all__ = (
     'Post',
     'PostLike',
@@ -10,7 +12,8 @@ __all__ = (
 class Post(models.Model):
     # Django가 제공하는 기본 settings.AUTH_USER_MODEL와 연결되도록 수정
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    photo = models.ImageField(upload_to='post', blank=True)
+    photo = CustomImageField(upload_to='post', blank=True)
+    video = models.ForeignKey('Video', blank=True, null=True)
     created_date = models.DateTimeField(auto_now_add=True)
     modified_date = models.DateTimeField(auto_now=True)
     my_comment = models.OneToOneField(

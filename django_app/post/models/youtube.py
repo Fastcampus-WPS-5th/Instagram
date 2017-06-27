@@ -1,5 +1,9 @@
 from django.db import models
 
+__all__ = (
+    'Video',
+)
+
 
 # Video를 위한 CustomManager
 class VideoManager(models.Manager):
@@ -26,10 +30,11 @@ class VideoManager(models.Manager):
             video.title,
             'created' if video_created else 'already exist'
         ))
+        return video
 
 
 class Video(models.Model):
-    youtube_id = models.CharField(max_length=50)
+    youtube_id = models.CharField(max_length=50, unique=True)
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
     url_thumbnail = models.CharField(max_length=200)

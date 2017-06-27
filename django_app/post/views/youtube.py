@@ -108,8 +108,8 @@ def youtube_search(request):
             Video.objects.create_from_search_result(item)
         re_pattern = ''.join(['(?=.*{})'.format(item) for item in q.split()])
         videos = Video.objects.filter(
-            Q(title__regex=re_pattern) |
-            Q(description__regex=re_pattern)
+            Q(title__iregex=re_pattern) |
+            Q(description__iregex=re_pattern)
         )
         context['videos'] = videos
     return render(request, 'post/youtube_search.html', context)

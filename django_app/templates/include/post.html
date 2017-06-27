@@ -12,10 +12,9 @@
   </header>
   <div class="post-photo-container">
     <!--
-    url태그를 사용해서 post:post_detail view로 이동하는 URL을 reverse
-    이때 post_pk라는 kwargs를 받으므로 post_pk key에 현재 post변수의 pk속성을 할당
+      url태그를 사용해서 post:post_detail view로 이동하는 URL을 reverse
+      이때 post_pk라는 kwargs를 받으므로 post_pk key에 현재 post변수의 pk속성을 할당
     -->
-
 
     {% if type == 'list' %}
     <a href="{% url 'post:post_detail' post_pk=post.pk %}">

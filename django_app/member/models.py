@@ -26,7 +26,7 @@ class UserManager(DefaultUserManager):
             }
         )
         # 유저가 새로 생성되었을 때만 프로필 이미지를 받아옴
-        if user_created:
+        if user_created and user_info.get('picture'):
             # https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/17190366_634177590104859_7473999312831140266_n.jpg?oh=4c68d08b4066747c1c7c7bcb32670b6a&oe=59DA648E
             # 프로필 이미지 URL
             url_picture = user_info['picture']['data']['url']

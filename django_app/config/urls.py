@@ -34,7 +34,7 @@ urlpatterns = [
     # url(r'^$', RedirectView.as_view(pattern_name='post:post_list')),
 
     # post앱의 urls.py모듈을 include시킨다
-    url(r'^post/', include('post.urls')),
+    url(r'^post/', include('post.urls.urls_views')),
     url(r'^member/', include('member.urls')),
 ]
 urlpatterns += static(

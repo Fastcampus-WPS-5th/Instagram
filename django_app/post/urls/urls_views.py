@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from . import views
+from .. import views
 
 # URL Namespace
 # https://docs.djangoproject.com/en/1.11/topics/http/urls/#url-namespaces

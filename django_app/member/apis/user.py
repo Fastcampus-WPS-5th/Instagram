@@ -4,17 +4,24 @@ from rest_framework.views import APIView
 
 from utils.permissions import ObjectIsRequestUser
 from ..models import User
-from ..serializers import UserSerializer
+from ..serializers import UserSerializer, UserCreationSerializer
 
 __all__ = (
+    'UserListCreateView',
     'UserRetrieveUpdateDestroyView',
 )
 
 
-# UserListCreateView
-# generics.ListCreateAPIView사용
-#  다 하셨으면 두 APIView를 Postman에 등록 후 테스트
-#   List, Create, Retrieve, Update, Destroy전부ㄴ
+class UserListCreateView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return UserSerializer
+        elif self.request.method == 'POST':
+            return UserCreationSerializer
+
+
 class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer

@@ -35,7 +35,7 @@ urlpatterns = [
 
     # post앱의 urls.py모듈을 include시킨다
     url(r'^post/', include('post.urls.urls_views')),
-    url(r'^member/', include('member.urls')),
+    url(r'^member/', include('member.urls.urls_views')),
 ]
 urlpatterns += static(
     prefix=settings.MEDIA_URL,

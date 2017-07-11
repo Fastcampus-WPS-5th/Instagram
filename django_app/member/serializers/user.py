@@ -14,7 +14,27 @@ class UserSerializer(serializers.ModelSerializer):
             'pk',
             'username',
             'nickname',
+            'img_profile',
         )
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            'pk',
+            'username',
+            'ori_password',
+            'password1',
+            'password2',
+            'img_profile',
+        )
+        read_only_fields = (
+            'username',
+        )
+    # validate_<field_name>을 이용해서
+    # ori_password, password1,2가 왔을경우 Password reset
+    # 그외의 경우 해당 필드를 업데이트
 
 
 class UserCreationSerializer(serializers.Serializer):

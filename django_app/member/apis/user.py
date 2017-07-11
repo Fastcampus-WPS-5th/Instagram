@@ -1,23 +1,24 @@
-from rest_framework import status
+from rest_framework import status, permissions, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from utils.permissions import ObjectIsRequestUser
 from ..models import User
 from ..serializers import UserSerializer
 
 __all__ = (
-    'UserDetailView',
+    'UserRetrieveUpdateDestroyView',
 )
 
 
-class UserDetailView(APIView):
-    @staticmethod
-    def get_object(pk):
-        try:
-            return User.objects.get(pk=pk)
-        except User.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-
-    def get(self, request, pk):
-        user = self.get_object(pk)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+# UserListCreateView
+# generics.ListCreateAPIView사용
+#  다 하셨으면 두 APIView를 Postman에 등록 후 테스트
+#   List, Create, Retrieve, Update, Destroy전부ㄴ
+class UserRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        ObjectIsRequestUser,
+    )

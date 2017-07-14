@@ -25,6 +25,8 @@ __all__ = (
     'post_like_toggle',
     'hashtag_post_list',
 )
+# 1. EMAIL관련 settings.py에 추가
+# 2. 누군가 어떤 글에 댓글을 달면, 해당 글의 작성자 이메일로 "누가 어떤내용의 댓글을 달았음"이라는 메일 보내기
 
 
 def post_list_original(request):

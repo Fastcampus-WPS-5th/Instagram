@@ -189,3 +189,10 @@ SECRET_KEY = '*02@a!af_(u@b1jpq@w^px=^mq+r#&&khuzzor60_3&zc^g5#7'
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'fastcampus.2016@gmail.com'
+EMAIL_HOST_PASSWORD = '비밀'
+EMAIL_PORT = 587

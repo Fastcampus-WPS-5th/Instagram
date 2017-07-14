@@ -4,6 +4,7 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
+from post.tasks import task_update_post_like_count
 from utils.fields import CustomImageField
 
 __all__ = (
@@ -43,7 +44,7 @@ class Post(models.Model):
 
     # 이 메서드를 적절한 곳에서 호출
     def calc_like_count(self):
-        time.sleep(6)
+        time.sleep(2)
         self.like_count = self.like_users.count()
         self.save()
 
@@ -66,10 +67,16 @@ class PostLike(models.Model):
         )
 
 
-@receiver(post_save, sender=PostLike)
-@receiver(post_delete, sender=PostLike)
+@receiver(post_save, sender=PostLike, dispatch_uid='postlike_save_update_like_count')
+@receiver(post_delete, sender=PostLike, dispatch_uid='postlike_delete_update_like_count')
 def update_post_like_count(sender, instance, **kwargs):
+    if kwargs['signal'].receivers[0][0][0] == 'postlike_save_update_like_count':
+        instance.post.like_count += 1
+    else:
+        instance.post.like_count -= 1
+    instance.post.save()
     print('Signal update_post_like_count, instance: {}'.format(
         instance
     ))
-    instance.post.calc_like_count()
+    # instance.post.calc_like_count()
+    task_update_post_like_count.delay(post_pk=instance.post.pk)

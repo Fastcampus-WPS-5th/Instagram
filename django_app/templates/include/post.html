@@ -62,9 +62,9 @@
       </div>
     </div>
     <p class="comment">
-      {% if post.like_users.exists %}
-        {% if post.like_users.count > 10 %}
-        <span>좋아요 {{ post.like_users.count }}개</span>
+      {% if post.like_count > 0 %}
+        {% if post.like_count > 10 %}
+        <span>좋아요 {{ post.like_count }}개</span>
         {% else %}
         <span>{{ post.like_users.all|join:', ' }}</span>님이 좋아합니다.
         {% endif %}

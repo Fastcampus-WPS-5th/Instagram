@@ -124,7 +124,7 @@ def signup(request):
         ### Form을 사용한 경우
         form = SignupForm(data=request.POST)
         if form.is_valid():
-            user = form.create_user()
+            user = form.save()
             django_login(request, user)
             return redirect('post:post_list')
     else:

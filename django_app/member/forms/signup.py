@@ -1,11 +1,13 @@
 from django import forms
 from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 User = get_user_model()
 
 
-class SignupForm(forms.Form):
+class SignupForm1(forms.Form):
     # SignupForm을 구성하고 해당 form을 view에서 사용하도록 설정
+    # email을 반드시 받도록 구성하고, view에서도 적용
     username = forms.CharField(
         help_text='Signup help text test',
         widget=forms.TextInput
@@ -14,6 +16,12 @@ class SignupForm(forms.Form):
         widget=forms.TextInput,
         help_text='닉네임은 유일해야 합니다',
         max_length=24,
+    )
+    email = forms.EmailField(
+        widget=forms.EmailInput,
+        help_text='이메일은 유일해야 합니다',
+        max_length=100,
+        required=True,
     )
     password1 = forms.CharField(
         widget=forms.PasswordInput
@@ -40,6 +48,14 @@ class SignupForm(forms.Form):
             )
         return nickname
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email and User.objects.filter(email=email).exists():
+            raise forms.ValidationError(
+                'Email already exist'
+            )
+        return email
+
     def clean_password2(self):
         # password1과 password2를 비교하여 같은지 검증
         # password2필드에 clean_<fieldname>을 재정의한 이유는,
@@ -63,3 +79,9 @@ class SignupForm(forms.Form):
             nickname=nickname,
             password=password
         )
+
+
+class SignupForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        model = User
+        fields = UserCreationForm.Meta.fields + ('email', 'nickname',)

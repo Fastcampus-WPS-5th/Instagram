@@ -81,6 +81,7 @@ class User(AbstractUser):
         (USER_TYPE_DJANGO, 'Django'),
         (USER_TYPE_FACEBOOK, 'Facebook'),
     )
+    email = models.EmailField(null=True, unique=True)
     # 유저타입. 기본은 Django이며, 페이스북 로그인시 USER_TYPE_FACEBOOK값을 갖도록 함
     user_type = models.CharField(max_length=1, choices=USER_TYPE_CHOICES, default=USER_TYPE_DJANGO)
     nickname = models.CharField(max_length=24, null=True, unique=True)
@@ -160,6 +161,11 @@ class User(AbstractUser):
     def followers(self):
         relations = self.follower_relations.all()
         return User.objects.filter(pk__in=relations.values('from_user'))
+
+
+# User._meta.get_field('email')._unique = True
+# User._meta.get_field('email').null = True
+# User._meta.get_field('email').blank = False
 
 
 class Relation(models.Model):

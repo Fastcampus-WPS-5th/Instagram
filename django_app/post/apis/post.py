@@ -1,8 +1,10 @@
 from rest_framework import status, generics
 from rest_framework.generics import get_object_or_404
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from post.pagination import PostPagination
 from ..models import Post, Comment
 from ..serializers import PostSerializer
 
@@ -15,6 +17,7 @@ __all__ = (
 class PostListCreateView(generics.ListCreateAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
+    pagination_class = PostPagination
 
     def perform_create(self, serializer):
         # serializer.save()로 생성된 Post instance를 instance변수에 할당

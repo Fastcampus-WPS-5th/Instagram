@@ -80,6 +80,13 @@ LOGIN_URL = 'member:login'
 FACEBOOK_APP_ID = '1714579385238490'
 FACEBOOK_SECRET_CODE = '4bf87e8bf3a942a4d83123482b0b74ae'
 
+# CORS
+# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    'null',
+    'localhost:3001',
+)
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -89,6 +96,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'corsheaders',
     'django_extensions',
     'rest_framework',
 
@@ -98,6 +106,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -200,3 +209,10 @@ EMAIL_PORT = 587
 # Celery
 CELERY_BROKER_URL = 'redis://localhost:6379/'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379/'
+
+# DRF
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    )
+}
